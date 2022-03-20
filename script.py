@@ -15,19 +15,21 @@ def extract(page):
 def transform(soup):
     divs = soup.find_all('div', class_ = 'slider_container')
     for item in divs:
-        title = item.find('a').text.strip()
+        title = item.find('h2', class_ = "jobTitle").text.strip()
         company = item.find('span', class_ = 'companyName').text
+        
         try:
             salary = item.find('span', class_ = "icl-u-xs-mr--xs").text
         except:
-            salary = ''
+            salary = '80000'
         summary = item.find('div', {'class' : 'job-snippet'}).text
 
         job = {
             'title': title,
             'company': company,
             'salary': salary,
-            'summary': summary
+            'summary': summary,
+            
         }
 
         joblist.append(job)
